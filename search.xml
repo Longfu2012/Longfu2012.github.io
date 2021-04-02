@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity游戏音频资源提取-acb格式</title>
+    <url>/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="游戏音频文件"><a href="#游戏音频文件" class="headerlink" title="游戏音频文件"></a>游戏音频文件</h4><p>在一个Unity游戏中，发现音频文件在平时的放置位置没有找打，因为有需要参考与借鉴思路的需求，所以希望提取音频文件。在游戏包找了一圈后，发现后缀acb的文件大小和命名比较可以，所以先弄开看看，位置放在assets下面的任意可能一个文件夹里面，如下类似：</p>
+<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/1.png" alt="演示1"></p>
+<h4 id="abc解压缩"><a href="#abc解压缩" class="headerlink" title="abc解压缩"></a>abc解压缩</h4><p>1.下载VGMToolbox工具对acb格式文件转成多个hca文件，下载地址如下：<br><a class="link" href="https://sourceforge.net/projects/vgmtoolbox/">VGMToolbox<i class="fas fa-external-link-alt"></i></a></p>
+<p>2.由于是免安装了，所有下载后解压可以看到这exe，直接双击启动<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/2.png" alt="演示2"></p>
+<p>3.切换到对应的选项，然后把你需要转换的acb文件拖到这里<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/3.png" alt="演示3"></p>
+<h4 id="hca文件转化"><a href="#hca文件转化" class="headerlink" title="hca文件转化"></a>hca文件转化</h4><p>4.此时与acb格式文件同一个文件夹下面会生成一个文件夹，如图所示。（我拖动的是SFX.acb文件）<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/4.png" alt="演示4"></p>
+<p>5.下载hca.exe,然后解压放在hca文件相同文件夹内，对其进行hca格式转成wav格式的音频文件<br><a href="Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/decode+hca.zip">hca及其批处理文件</a></p>
+<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/5.png" alt="演示5"></p>
+<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/6.png" alt="演示6"></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo-asset-image生成本地图片链接错误</title>
     <url>/2020/12/09/hexo-asset-image%E7%94%9F%E6%88%90%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%E9%94%99%E8%AF%AF/</url>
     <content><![CDATA[<h3 id="文章图片存放选型"><a href="#文章图片存放选型" class="headerlink" title="文章图片存放选型"></a>文章图片存放选型</h3><p>在安装好Hexo和把主题设置完成后，想在自己的文字里面添加一点图文说明，这样可以更好的表达文字旨意。那么如何让hexo生成的静态网页里面插入图片呢？<br>其实就是遵循markdown的语法可以有三种方式把图片插入到文章中:</p>
@@ -43,26 +63,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity游戏音频资源提取-acb格式</title>
-    <url>/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="游戏音频文件"><a href="#游戏音频文件" class="headerlink" title="游戏音频文件"></a>游戏音频文件</h4><p>在一个Unity游戏中，发现音频文件在平时的放置位置没有找打，因为有需要参考与借鉴思路的需求，所以希望提取音频文件。在游戏包找了一圈后，发现后缀acb的文件大小和命名比较可以，所以先弄开看看，位置放在assets下面的任意可能一个文件夹里面，如下类似：</p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/1.png" alt="演示1"></p>
-<h4 id="abc解压缩"><a href="#abc解压缩" class="headerlink" title="abc解压缩"></a>abc解压缩</h4><p>1.下载VGMToolbox工具对acb格式文件转成多个hca文件，下载地址如下：<br><a class="link" href="https://sourceforge.net/projects/vgmtoolbox/">VGMToolbox<i class="fas fa-external-link-alt"></i></a></p>
-<p>2.由于是免安装了，所有下载后解压可以看到这exe，直接双击启动<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/2.png" alt="演示2"></p>
-<p>3.切换到对应的选项，然后把你需要转换的acb文件拖到这里<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/3.png" alt="演示3"></p>
-<h4 id="hca文件转化"><a href="#hca文件转化" class="headerlink" title="hca文件转化"></a>hca文件转化</h4><p>4.此时与acb格式文件同一个文件夹下面会生成一个文件夹，如图所示。（我拖动的是SFX.acb文件）<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/4.png" alt="演示4"></p>
-<p>5.下载hca.exe,然后解压放在hca文件相同文件夹内，对其进行hca格式转成wav格式的音频文件<br><a href="Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/decode+hca.zip">hca及其批处理文件</a></p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/5.png" alt="演示5"></p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/6.png" alt="演示6"></p>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
       </tags>
   </entry>
   <entry>

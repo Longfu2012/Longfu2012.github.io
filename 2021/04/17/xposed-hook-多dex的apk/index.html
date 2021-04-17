@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <title>
-        Unity游戏音频资源提取-acb格式 |
+        xposed hook 多dex的apk |
         
         Angulu&#39;s Technology Stack
     </title>
@@ -127,7 +127,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Unity游戏音频资源提取-acb格式</span>
+            <span class="title-hover-animation">xposed hook 多dex的apk</span>
         </div>
 
         
@@ -143,7 +143,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-calendar"></i> 2021-04-01 17:21:35
+        <i class="fas fa-calendar"></i> 2021-04-17 10:37:49
     </span>
     
         <span class="article-categories article-meta-item">
@@ -151,7 +151,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Unity/">Unity</a>
+                        <a href="/categories/xposed/">xposed</a>
                     </li>
                 
             </ul>
@@ -163,7 +163,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Unity/">Unity</a>
+                        <a href="/tags/xposed/">xposed</a>
                     </li>
                 
             </ul>
@@ -173,12 +173,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i> <span>276 字</span>
+            <i class="fas fa-file-word"></i> <span>535 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i> <span>1 分钟</span>
+            <i class="fas fa-clock"></i> <span>2 分钟</span>
         </span>
     
     
@@ -194,15 +194,12 @@
         
 
         <div class="article-content markdown-body">
-            <h4 id="游戏音频文件"><a href="#游戏音频文件" class="headerlink" title="游戏音频文件"></a>游戏音频文件</h4><p>在一个Unity游戏中，发现音频文件在平时的放置位置没有找打，因为有需要参考与借鉴思路的需求，所以希望提取音频文件。在游戏包找了一圈后，发现后缀acb的文件大小和命名比较可以，所以先弄开看看，位置放在assets下面的任意可能一个文件夹里面，如下类似：</p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/1.png" alt="演示1"></p>
-<h4 id="abc解压缩"><a href="#abc解压缩" class="headerlink" title="abc解压缩"></a>abc解压缩</h4><p>1.下载VGMToolbox工具对acb格式文件转成多个hca文件，下载地址如下：<br><a class="link" target="_blank" rel="noopener" href="https://sourceforge.net/projects/vgmtoolbox/">VGMToolbox<i class="fas fa-external-link-alt"></i></a></p>
-<p>2.由于是免安装了，所有下载后解压可以看到这exe，直接双击启动<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/2.png" alt="演示2"></p>
-<p>3.切换到对应的选项，然后把你需要转换的acb文件拖到这里<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/3.png" alt="演示3"></p>
-<h4 id="hca文件转化"><a href="#hca文件转化" class="headerlink" title="hca文件转化"></a>hca文件转化</h4><p>4.此时与acb格式文件同一个文件夹下面会生成一个文件夹，如图所示。（我拖动的是SFX.acb文件）<br><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/4.png" alt="演示4"></p>
-<p>5.下载hca.exe,然后解压放在hca文件相同文件夹内，对其进行hca格式转成wav格式的音频文件<br><a href="Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/decode+hca.zip">hca及其批处理文件</a></p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/5.png" alt="演示5"></p>
-<p><img src="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/6.png" alt="演示6"></p>
+            <h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>最近突然想hook一下东西，然后捡起xposed这个古老的东西就开始来hook它，然后突然给打脸了，仔细检查ClassName，methodName和parameter都毫无问题，为啥要打我脸？慢慢蹲下身子，沉思良久，自我检讨，xposed能有什么坏心思，问题肯定是出在自己身上，附上打脸现场日志。<br><img src="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/1.png" alt="演示1"></p>
+<h5 id="查因"><a href="#查因" class="headerlink" title="查因"></a>查因</h5><p>想要根除困扰自己问题的方法，只能从自身出发，马上检查自己打出来的包（这里以友盟SDK作为演示样例学习），好家伙，原来我要hook的类在第二个dex中（Adnroid打包机制，dex方法数超过邪恶的65535个方法就会按照一定的规律进行分包），问题找到了，也不能怪人家 <strong>XposedHelpers.findAndHookMethod</strong> 不行，不行的永远是自己，附上查因现场。<br><img src="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/2.png" alt="演示2"></p>
+<h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>既然是多dex导致的hook问题，那么只要找到那个dex再进行hook即可（这里的方式和动态加载dex hook的方式地方有点不一样）。这里必然想到Application入口，打开打开查看一下，必经之路好像是这个<br><img src="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/3.png" alt="演示3"></p>
+<p>那么代码就撸起来，这么写试试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//过滤一下不关注的包，排除影响</span></span><br><span class="line"> <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;yourPkgName&quot;</span>))</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">XposedHelpers.findAndHookMethod(Application.class, <span class="string">&quot;attach&quot;</span>,</span><br><span class="line">    Context.class, <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">            ClassLoader cl = ((Context) param.args[<span class="number">0</span>]).getClassLoader();</span><br><span class="line">            Class&lt;?&gt; hookclass = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">            	<span class="comment">//查看dex有没有这个Class</span></span><br><span class="line">                hookclass = cl.loadClass(<span class="string">&quot;com.umeng.commonsdk.UMConfigure&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                XposedBridge.log(<span class="string">&quot;load class error&quot;</span>+e);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//确定有这个Class再进行hook方法的操作</span></span><br><span class="line">            XposedBridge.log( <span class="string">&quot;load success&quot;</span>);</span><br><span class="line">            XposedHelpers.findAndHookMethod(hookclass, <span class="string">&quot;init&quot;</span>, Context.class,String.class,String.class,<span class="keyword">int</span>.class,String.class,</span><br><span class="line">                <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">                    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.beforeHookedMethod(param);</span><br><span class="line">                        XposedBridge.log( <span class="string">&quot;has Hooked!&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                        <span class="comment">//打印一下形参</span></span><br><span class="line">                        XposedBridge.log(<span class="string">&quot;param.args[0] = &quot;</span>+param.args[<span class="number">0</span>]);</span><br><span class="line">                        XposedBridge.log(<span class="string">&quot;param.args[1] = &quot;</span>+param.args[<span class="number">1</span>]);</span><br><span class="line">                        XposedBridge.log(<span class="string">&quot;param.args[2] = &quot;</span>+param.args[<span class="number">2</span>]);</span><br><span class="line">                        XposedBridge.log(<span class="string">&quot;param.args[3] = &quot;</span>+param.args[<span class="number">3</span>]);</span><br><span class="line">                        XposedBridge.log(<span class="string">&quot;param.args[4] = &quot;</span>+param.args[<span class="number">4</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>果然很顺利，成功hook到了多dex里面的方法了。<br><img src="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/4.png" alt="演示4"></p>
 
         </div>
 
@@ -211,29 +208,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/"
-                        >
-                            <span class="left arrow-icon flex-center" >
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">xposed hook 多dex的apk</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2020/12/09/hexo-asset-image%E7%94%9F%E6%88%90%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%E9%94%99%E8%AF%AF/"
+                           href="/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">hexo-asset-image生成本地图片链接错误</span>
+                                <span class="post-nav-title-item">Unity游戏音频资源提取-acb格式</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center" >
@@ -352,7 +334,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">游戏音频文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abc%E8%A7%A3%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.</span> <span class="nav-text">abc解压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hca%E6%96%87%E4%BB%B6%E8%BD%AC%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">hca文件转化</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">查因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li></ol>
     </div>
 </div>
         

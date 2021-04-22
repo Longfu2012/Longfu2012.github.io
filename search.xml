@@ -95,4 +95,69 @@
         <tag>xposed</tag>
       </tags>
   </entry>
+  <entry>
+    <title>游戏引擎学习之Unity3d&amp;Android通信</title>
+    <url>/2021/04/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E5%AD%A6%E4%B9%A0%E4%B9%8BUnity3d-Android%E9%80%9A%E4%BF%A1/</url>
+    <content><![CDATA[<h3 id="游戏引擎学习之Unity3d-amp-Android通信"><a href="#游戏引擎学习之Unity3d-amp-Android通信" class="headerlink" title="游戏引擎学习之Unity3d&amp;Android通信"></a>游戏引擎学习之Unity3d&amp;Android通信</h3><h4 id="缘由"><a href="#缘由" class="headerlink" title="缘由"></a>缘由</h4><p>Unity3d引擎是跨平台的，但是有时候需要Android平台的Sdk的时候，需要如何进行交互呢？Unity3d提供了一套相关套件，供我们指定平台Sdk和Unity3d（C#）进行通信。</p>
+<h4 id="学习工具"><a href="#学习工具" class="headerlink" title="学习工具"></a>学习工具</h4><p>Unity3d引擎，Android Studio </p>
+<h4 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h4><p>我们来测试Unity3d引擎提供的Android通信方案，分为两个步骤测试，新建两个工程，分别是Android工程和Unity3d工程（文后带有下载地址），然后测试各个调用方式</p>
+<ul>
+<li>工程构建</li>
+</ul>
+<p>1.Android工程构建<br>构建Android工程和Unity3d（C#）通信，这里使用的是Android Studio构建，步骤如下<br>1)平常新建Android工程一样，在Android Studio上新建一个简单的工程<br>2)寻找Unity3d引擎提供的Android编译包，比如，我使用的Unity3d是5.6.2f1版本的，我在安装路径下找到这个jar(我的是在win下的版本)</p>
+<blockquote>
+<p>你的安装目录\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\Variations\mono\Release\Classes<br>3)将这个jar包复制一份，放到android工程的libs目录下，并在工程根的build.gradle文件中添加一句话</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">...</span><br><span class="line">provided files(&#39;libs&#x2F;unity3d.jar&#39;)</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时的jar我已经重命名为unity3d.jar<br>4)在Android工程的AndroidMainifest.xml文件中meta-data声明Unity3d的绘制Activity，我这里申明的是主Activity，如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;activity android:name&#x3D;&quot;.MainActivity&quot;&gt;</span><br><span class="line">            &lt;intent-filter&gt;</span><br><span class="line">                &lt;action android:name&#x3D;&quot;android.intent.action.MAIN&quot; &#x2F;&gt;</span><br><span class="line">                &lt;category android:name&#x3D;&quot;android.intent.category.LAUNCHER&quot; &#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;intent-filter&gt;</span><br><span class="line">            &lt;meta-data android:name&#x3D;&quot;unityplayer.UnityActivity&quot; android:value&#x3D;&quot;true&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;activity&gt;</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>5)切换到4)步骤中对应的Activity的java文件中，让此Activity集成Unity3d提供的一个父类UnityPlayerActivity，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class MainActivity extends UnityPlayerActivity &#123;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，Android工程的准备工作就已经完成了</p>
+<p>2.Unity3d工程构建</p>
+<p>1)新建Scene和Script文件夹，存放场景和脚本<br>2)新建Plugins文件夹和在Plugins下再新建Android文件夹（划重点，名字不可变）</p>
+<p>至此Unity3d工程已经构建完成</p>
+<p>3.Android工程和Unity3d工程的联系建立<br>1)在Android的主Activity工程里面编写被Unity3d(C#)脚本调用的代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">public class MainActivity extends UnityPlayerActivity &#123;</span><br><span class="line"></span><br><span class="line">    private Context mContext;</span><br><span class="line">    private static final String ANDROID_STR &#x3D; &quot;Android Platform&quot;;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        mContext &#x3D; this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void showToast()&#123;</span><br><span class="line">        Toast.makeText(mContext,ANDROID_STR,Toast.LENGTH_LONG).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void showToast(String unityStr)&#123;</span><br><span class="line">        Toast.makeText(mContext, TextUtils.isEmpty(unityStr) ? &quot;null&quot;:unityStr,Toast.LENGTH_LONG).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getAndroidStr()&#123;</span><br><span class="line">        return ANDROID_STR;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>2)将Android工程的代码打成jar包<br>3)把Android工程打成的jar包，res目录，AndroidManifest.xml放在Unity3d插件目录下<br>4)现在就可以在Unity3d工程中愉快的调用Android插件提供的方法啦</p>
+<ul>
+<li>Unity3d ==&gt; Android</li>
+</ul>
+<p>初始化相关类,获得调用对象。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AndroidJavaClass androidjavaClass;</span><br><span class="line">AndroidJavaObject androidjavaObj;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Use this for initialization</span><br><span class="line">void Start () &#123;</span><br><span class="line">	androidjavaClass &#x3D; new AndroidJavaClass (&quot;com.unity3d.player.UnityPlayer&quot;);</span><br><span class="line">	androidjavaObj &#x3D; androidjavaClass.GetStatic&lt;AndroidJavaObject&gt; (&quot;currentActivity&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.无参调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void callToast()&#123;</span><br><span class="line">	if(null !&#x3D; androidjavaObj)&#123;</span><br><span class="line">		androidjavaObj.Call (&quot;showToast&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.有参调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void callToast2()&#123;</span><br><span class="line">	if(null !&#x3D; androidjavaObj)&#123;</span><br><span class="line">		androidjavaObj.Call (&quot;showToast&quot;,&quot;unity3d Str&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.有返回值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void callAndroidStr()&#123;</span><br><span class="line">	if(null !&#x3D; androidjavaObj)&#123;</span><br><span class="line">		string rlt &#x3D; androidjavaObj.Call&lt;string&gt; (&quot;getAndroidStr&quot;);</span><br><span class="line">		gameObject.GetComponentInChildren&lt;Text&gt;().text &#x3D; rlt;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Android ==&gt; Unity3d<br>Android端调用Unity3d提供的jar包，里面有一个方法<br>UnityPlayer.UnitySendMessage(String,String,String)<br>三个参数的含义分别是:</li>
+<li>1、挂载脚本的对象（此脚本定义了需要调用的方法）*</li>
+<li>2、挂载脚本里需要调用的方法名字*</li>
+<li>3、需要传递给调用方法的参数字符串*</li>
+</ul>
+<p>1.无参调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void ChangeObj1()&#123;</span><br><span class="line">		gameObject.GetComponentInChildren&lt;Text&gt;().text &#x3D; &quot;android调用 无参方法&quot;;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>2.有参调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void ChangeObj2(string str)&#123;</span><br><span class="line">		gameObject.GetComponentInChildren&lt;Text&gt;().text &#x3D; &quot;android调用 有参方法 参数:&quot; + ((str &#x3D;&#x3D; null ) ? &quot;get null ?&quot;:str);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：为什么要把方法名写的不一样，测试结果显示，若方法名一样，Android端调用Unity端时，只能调用到无参的那个方法。<br>3.有返回值</p>
+<p>UnitySendMessage方法不提供返回值</p>
+<p>##注意点<br>1.Android插件的AndroidMainifest.xml的包名最好和Unity3d设置的包名一致<br>2.unity3d工程的Android apk导出设置需要和插件的AndroidMainifest.xml目标sdk版本一致，不然会导致报错,最好配置都一致。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Warning: [Temp\StagingArea\AndroidManifest-main.xml:12, E:\workspace_u3d\Unity3dDemo\Temp\StagingArea\android-libraries\UnityTest-release\AndroidManifest.xml:3] Main manifest has &lt;uses-sdk android:targetSdkVersion&#x3D;&#39;24&#39;&gt; but library uses targetSdkVersion&#x3D;&#39;26&#39;</span><br></pre></td></tr></table></figure>
+<p>3.若Android调用Unity3d（C#）方法中有重载方法，只会调用无参的方法</p>
+<p>##源码地址</p>
+<p><a class="link" href="https://github.com/Longfu2012/UnityTest.git">Android Demo 源码地址<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" href="https://github.com/Longfu2012/Unity3dDemo.git">Unity3d Demo 源码地址<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
 </search>

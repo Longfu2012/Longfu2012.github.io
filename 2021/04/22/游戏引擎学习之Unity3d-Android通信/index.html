@@ -242,11 +242,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void ChangeObj2(string str)&#123;</span><br><span class="line">		gameObject.GetComponentInChildren&lt;Text&gt;().text &#x3D; &quot;android调用 有参方法 参数:&quot; + ((str &#x3D;&#x3D; null ) ? &quot;get null ?&quot;:str);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>注意：为什么要把方法名写的不一样，测试结果显示，若方法名一样，Android端调用Unity端时，只能调用到无参的那个方法。<br>3.有返回值</p>
 <p>UnitySendMessage方法不提供返回值</p>
-<p>##注意点<br>1.Android插件的AndroidMainifest.xml的包名最好和Unity3d设置的包名一致<br>2.unity3d工程的Android apk导出设置需要和插件的AndroidMainifest.xml目标sdk版本一致，不然会导致报错,最好配置都一致。</p>
+<h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><p>1.Android插件的AndroidMainifest.xml的包名最好和Unity3d设置的包名一致<br>2.unity3d工程的Android apk导出设置需要和插件的AndroidMainifest.xml目标sdk版本一致，不然会导致报错,最好配置都一致。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: [Temp\StagingArea\AndroidManifest-main.xml:12, E:\workspace_u3d\Unity3dDemo\Temp\StagingArea\android-libraries\UnityTest-release\AndroidManifest.xml:3] Main manifest has &lt;uses-sdk android:targetSdkVersion&#x3D;&#39;24&#39;&gt; but library uses targetSdkVersion&#x3D;&#39;26&#39;</span><br></pre></td></tr></table></figure>
 <p>3.若Android调用Unity3d（C#）方法中有重载方法，只会调用无参的方法</p>
-<p>##源码地址</p>
-<p><a class="link" target="_blank" rel="noopener" href="https://github.com/Longfu2012/UnityTest.git">Android Demo 源码地址<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h4><p><a class="link" target="_blank" rel="noopener" href="https://github.com/Longfu2012/UnityTest.git">Android Demo 源码地址<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link" target="_blank" rel="noopener" href="https://github.com/Longfu2012/Unity3dDemo.git">Unity3d Demo 源码地址<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
@@ -382,7 +381,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E5%AD%A6%E4%B9%A0%E4%B9%8BUnity3d-amp-Android%E9%80%9A%E4%BF%A1"><span class="nav-number">1.</span> <span class="nav-text">游戏引擎学习之Unity3d&amp;Android通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%98%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">缘由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">学习工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%96%BD"><span class="nav-number">1.3.</span> <span class="nav-text">实施</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E5%AD%A6%E4%B9%A0%E4%B9%8BUnity3d-amp-Android%E9%80%9A%E4%BF%A1"><span class="nav-number">1.</span> <span class="nav-text">游戏引擎学习之Unity3d&amp;Android通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%98%E7%94%B1"><span class="nav-number">1.1.</span> <span class="nav-text">缘由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">学习工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%96%BD"><span class="nav-number">1.3.</span> <span class="nav-text">实施</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">1.4.</span> <span class="nav-text">注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%9C%B0%E5%9D%80"><span class="nav-number">1.5.</span> <span class="nav-text">源码地址</span></a></li></ol></li></ol>
     </div>
 </div>
         

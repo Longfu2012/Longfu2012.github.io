@@ -350,11 +350,69 @@
     <!-- page aside -->
     <aside class="page-aside">
         
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">游戏音频文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abc%E8%A7%A3%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.</span> <span class="nav-text">abc解压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hca%E6%96%87%E4%BB%B6%E8%BD%AC%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">hca文件转化</span></a></li></ol>
-    </div>
-</div>
+            .post-toc-wrap {
+  width: 100%;
+  font-size: 0.92rem;
+  box-sizing: border-box;
+
+  .post-toc {
+
+    ol {
+      list-style: none;
+      margin: 0;
+      padding: 0 2px 12px 10px;
+      text-align: left;
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+
+      > ol {
+        padding-left: 0;
+      }
+
+      a {
+        transition-property: all;
+        transition();
+      }
+    }
+
+    .nav-item {
+      line-height: 1.8;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav {
+      .nav-child {
+        display: hexo-config('toc.expand_all') ? block : none;
+      }
+
+      .active > .nav-child {
+        display: block;
+      }
+
+      .active-current > .nav-child {
+        display: block;
+
+        > .nav-item {
+          display: block;
+        }
+      }
+
+      .active > a {
+        color: var(--primary-color);
+      }
+
+      .active-current > a {
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+
         
     </aside>
 

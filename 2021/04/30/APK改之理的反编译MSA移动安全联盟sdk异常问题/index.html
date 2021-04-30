@@ -333,69 +333,11 @@
     <!-- page aside -->
     <aside class="page-aside">
         
-            .post-toc-wrap {
-  width: 100%;
-  font-size: 0.92rem;
-  box-sizing: border-box;
-
-  .post-toc {
-
-    ol {
-      list-style: none;
-      margin: 0;
-      padding: 0 2px 12px 10px;
-      text-align: left;
-
-      &:last-child {
-        padding-bottom: 0;
-      }
-
-      > ol {
-        padding-left: 0;
-      }
-
-      a {
-        transition-property: all;
-        transition();
-      }
-    }
-
-    .nav-item {
-      line-height: 1.8;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .nav {
-      .nav-child {
-        display: hexo-config('toc.expand_all') ? block : none;
-      }
-
-      .active > .nav-child {
-        display: block;
-      }
-
-      .active-current > .nav-child {
-        display: block;
-
-        > .nav-item {
-          display: block;
-        }
-      }
-
-      .active > a {
-        color: var(--primary-color);
-      }
-
-      .active-current > a {
-        color: var(--primary-color);
-      }
-    }
-  }
-}
-
-
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">一、起因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9F%A5%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">二、查因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3"><span class="nav-number">3.</span> <span class="nav-text">三、解决</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">3.0.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">3.0.2.</span> <span class="nav-text">方法二</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
         
     </aside>
 

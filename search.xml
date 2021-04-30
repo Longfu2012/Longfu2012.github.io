@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>APK改之理的反编译MSA移动安全联盟sdk异常问题</title>
+    <url>/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h4><p>接到运营的需求，需要对CP的包体进行部分修正，默默的掏出APK改之理搞起来，一顿进程后，发现好家伙，失败了？？<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/1.png" alt="演示1"><br>这就尴尬了，赶紧看看什么原因。。。点开目录一看，好家伙，怎么出现了smali_assets目录.<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/2.png" alt="演示2"></p>
+<h4 id="二、查因"><a href="#二、查因" class="headerlink" title="二、查因"></a>二、查因</h4><p>顺着assets关键字对apk进行解压缩，发现apk包里面的assets目录先存着一个dex文件，如图所示<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/3.png" alt="演示3"><br>那么问题就是出现在了这里咯？<br>这个Dex文件是从哪里来的呢？查询得知它来自<a class="link" href="http://www.msa-alliance.cn/col.jsp?id=120">MSA移动安全联盟sdk<i class="fas fa-external-link-alt"></i></a>，这个SDK是为了解决，Android 10版本中，广告渠道商们作为非厂商系统应用将无法获取 IMEI、MAC等设备信息选择OAID字段作为IMEI等的替代字段标识.没错，它是为了获取设备标识来获取OAID字段的。也就是未来很多apk将会带上这个SDK，那这个问题得解决啊.</p>
+<h4 id="三、解决"><a href="#三、解决" class="headerlink" title="三、解决"></a>三、解决</h4><p>这个问题其实是APK改之理没有长期更新遗留的一个问题，这个问题可以通过两种方法解决。</p>
+<h6 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h6><p>既然APK改之理不支持assets目录有dex文件存在来操作，那么只要把apk里面的assets的dex文件拿出来，反编译，回编译的时候手动放回去就可以解决，这个解决方式一两次还好，多次就显得麻烦的要死了，而且回编译的时候很可能会忘记，导致apk的一些功能异常。</p>
+<h6 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h6><p>解决问题肯定要找到根源来解决啦，APK改之理虽然不更新了，但是他也是依托apktool这个工具来反编译了，说白了就是代码调用了一下这个工具而已，那么更新一下apktool不就可以了，还好apktool到现在没有断更。<br>找到自己现在用的apktool的目录，通过修改apktool来到达彻底解决这个问题的目的。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/7.png" alt="演示7"><br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/8.png" alt="演示8"><br>找到apktool是官网更新日志，查看解决方法，发现在版本2.4.1以上就已经解决了这个问题。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/4.png" alt="演示4"><br><a class="link" href="https://ibotpeaches.github.io/Apktool/changes/">APKTool官网更新日志<i class="fas fa-external-link-alt"></i></a><br>既然知道了解决办法，其实就是加一条指令 <code>--only-main-classes</code> 而已。那问题就不大了，找打apktool的源代码，<a class="link" href="https://github.com/iBotPeaches/Apktool">Apktool在github的源码地址<i class="fas fa-external-link-alt"></i></a>，翻到程序的入口类 <code>brut.apktool.Main</code> 找到对应的入口main方法后。<br>因为我们是为了给APK改之理解决这个问题了，所以就偷个懒，不用看apktool的源代码了，直接遇到反编译指令的时候，强行插入一段我们想要插入的指令，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/5.png" alt="演示5"><br>代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> size = args.length;</span><br><span class="line">String[] newArgs = <span class="keyword">new</span> String[size+<span class="number">1</span>];</span><br><span class="line"><span class="keyword">boolean</span> needAdd = <span class="keyword">false</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">        needAdd = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(needAdd)&#123;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++,j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">            newArgs[++j] = <span class="string">&quot;--only-main-classes&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过简单粗暴的一段代码后，不掉头发的前提下，打出了一个jar包替换APK改之理的jar解决这个问题，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/6.png" alt="演示6"></p>
+<p><a href="APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/apktool.jar">编译好的Apktool文件</a></p>
+]]></content>
+      <categories>
+        <category>逆向</category>
+      </categories>
+      <tags>
+        <tag>逆向</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity游戏音频资源提取-acb格式</title>
     <url>/2021/04/01/Unity%E6%B8%B8%E6%88%8F%E9%9F%B3%E9%A2%91%E8%B5%84%E6%BA%90%E6%8F%90%E5%8F%96-acb%E6%A0%BC%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="游戏音频文件"><a href="#游戏音频文件" class="headerlink" title="游戏音频文件"></a>游戏音频文件</h4><p>在一个Unity游戏中，发现音频文件在平时的放置位置没有找打，因为有需要参考与借鉴思路的需求，所以希望提取音频文件。在游戏包找了一圈后，发现后缀acb的文件大小和命名比较可以，所以先弄开看看，位置放在assets下面的任意可能一个文件夹里面，如下类似：</p>
@@ -66,19 +85,6 @@
       </tags>
   </entry>
   <entry>
-    <title>安咕噜的入栈开篇</title>
-    <url>/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/</url>
-    <content><![CDATA[<h2 id="开篇原因"><a href="#开篇原因" class="headerlink" title="开篇原因"></a>开篇原因</h2><img src="/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/1.png" class title="This is an image">
-<h2 id="如何开篇"><a href="#如何开篇" class="headerlink" title="如何开篇"></a>如何开篇</h2><p><img src="/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/2.png" alt="这个图片"></p>
-<h2 id="开篇计划"><a href="#开篇计划" class="headerlink" title="开篇计划"></a>开篇计划</h2><h2 id="开篇结果"><a href="#开篇结果" class="headerlink" title="开篇结果"></a>开篇结果</h2>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>xposed hook 多dex的apk</title>
     <url>/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/</url>
     <content><![CDATA[<h5 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h5><p>最近突然想hook一下东西，然后捡起xposed这个古老的东西就开始来hook它，然后突然给打脸了，仔细检查ClassName，methodName和parameter都毫无问题，为啥要打我脸？慢慢蹲下身子，沉思良久，自我检讨，xposed能有什么坏心思，问题肯定是出在自己身上，附上打脸现场日志。<br><img src="/2021/04/17/xposed-hook-%E5%A4%9Adex%E7%9A%84apk/1.png" alt="演示1"></p>
@@ -93,6 +99,19 @@
       </categories>
       <tags>
         <tag>xposed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安咕噜的入栈开篇</title>
+    <url>/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[<h2 id="开篇原因"><a href="#开篇原因" class="headerlink" title="开篇原因"></a>开篇原因</h2><img src="/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/1.png" class title="This is an image">
+<h2 id="如何开篇"><a href="#如何开篇" class="headerlink" title="如何开篇"></a>如何开篇</h2><p><img src="/2020/12/08/%E5%AE%89%E5%92%95%E5%99%9C%E7%9A%84%E5%85%A5%E6%A0%88%E5%BC%80%E7%AF%87/2.png" alt="这个图片"></p>
+<h2 id="开篇计划"><a href="#开篇计划" class="headerlink" title="开篇计划"></a>开篇计划</h2><h2 id="开篇结果"><a href="#开篇结果" class="headerlink" title="开篇结果"></a>开篇结果</h2>]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -157,24 +176,6 @@
       </categories>
       <tags>
         <tag>Unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>APK改之理的反编译MSA移动安全联盟sdk异常问题</title>
-    <url>/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h4 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h4><p>接到运营的需求，需要对CP的包体进行部分修正，默默的掏出APK改之理搞起来，一顿进程后，发现好家伙，失败了？？<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/1.png" alt="演示1"><br>这就尴尬了，赶紧看看什么原因。。。点开目录一看，好家伙，怎么出现了smali_assets目录.<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/2.png" alt="演示2"></p>
-<h4 id="二、查因"><a href="#二、查因" class="headerlink" title="二、查因"></a>二、查因</h4><p>顺着assets关键字对apk进行解压缩，发现apk包里面的assets目录先存着一个dex文件，如图所示<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/3.png" alt="演示3"><br>那么问题就是出现在了这里咯？<br>这个Dex文件是从哪里来的呢？查询得知它来自<a class="link" href="http://www.msa-alliance.cn/col.jsp?id=120">MSA移动安全联盟sdk<i class="fas fa-external-link-alt"></i></a>，这个SDK是为了解决，Android 10版本中，广告渠道商们作为非厂商系统应用将无法获取 IMEI、MAC等设备信息选择OAID字段作为IMEI等的替代字段标识.没错，它是为了获取设备标识来获取OAID字段的。也就是未来很多apk将会带上这个SDK，那这个问题得解决啊.</p>
-<h4 id="三、解决"><a href="#三、解决" class="headerlink" title="三、解决"></a>三、解决</h4><p>这个问题其实是APK改之理没有长期更新遗留的一个问题，这个问题可以通过两种方法解决。</p>
-<h6 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h6><p>既然APK改之理不支持assets目录有dex文件存在来操作，那么只要把apk里面的assets的dex文件拿出来，反编译，回编译的时候手动放回去就可以解决，这个解决方式一两次还好，多次就显得麻烦的要死了，而且回编译的时候很可能会忘记，导致apk的一些功能异常。</p>
-<h6 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h6><p>解决问题肯定要找到根源来解决啦，APK改之理虽然不更新了，但是他也是依托apktool这个工具来反编译了，说白了就是代码调用了一下这个工具而已，那么更新一下apktool不就可以了，还好apktool到现在没有断更。<br>找到自己现在用的apktool的目录，通过修改apktool来到达彻底解决这个问题的目的。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/7.png" alt="演示7"><br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/8.png" alt="演示8"><br>找到apktool是官网更新日志，查看解决方法，发现在版本2.4.1以上就已经解决了这个问题。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/4.png" alt="演示4"><br><a class="link" href="https://ibotpeaches.github.io/Apktool/changes/">APKTool官网更新日志<i class="fas fa-external-link-alt"></i></a><br>既然知道了解决办法，其实就是加一条指令 <code>--only-main-classes</code> 而已。那问题就不大了，找打apktool的源代码，<a class="link" href="https://github.com/iBotPeaches/Apktool">Apktool在github的源码地址<i class="fas fa-external-link-alt"></i></a>，翻到程序的入口类 <code>brut.apktool.Main</code> 找到对应的入口main方法后。<br>因为我们是为了给APK改之理解决这个问题了，所以就偷个懒，不用看apktool的源代码了，直接遇到反编译指令的时候，强行插入一段我们想要插入的指令，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/5.png" alt="演示5"><br>代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> size = args.length;</span><br><span class="line">String[] newArgs = <span class="keyword">new</span> String[size+<span class="number">1</span>];</span><br><span class="line"><span class="keyword">boolean</span> needAdd = <span class="keyword">false</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">        needAdd = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(needAdd)&#123;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++,j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">            newArgs[++j] = <span class="string">&quot;--only-main-classes&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>经过简单粗暴的一段代码后，不掉头发的前提下，打出了一个jar包替换APK改之理的jar解决这个问题，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/6.png" alt="演示6"></p>
-]]></content>
-      <categories>
-        <category>逆向</category>
-      </categories>
-      <tags>
-        <tag>逆向</tag>
       </tags>
   </entry>
 </search>

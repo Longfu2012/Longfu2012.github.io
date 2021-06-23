@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <title>
-        APK改之理的反编译MSA移动安全联盟sdk异常问题 |
+        Apk启动图标渠道角标自动个性化思路&amp;实现 |
         
         Angulu&#39;s Technology Stack
     </title>
@@ -127,7 +127,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">APK改之理的反编译MSA移动安全联盟sdk异常问题</span>
+            <span class="title-hover-animation">Apk启动图标渠道角标自动个性化思路&amp;实现</span>
         </div>
 
         
@@ -143,19 +143,8 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-calendar"></i> 2021-04-30 13:52:03
+        <i class="fas fa-calendar"></i> 2021-06-23 14:51:37
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E9%80%86%E5%90%91/">逆向</a>
-                    </li>
-                
-            </ul>
-        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -173,12 +162,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i> <span>823 字</span>
+            <i class="fas fa-file-word"></i> <span>317 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i> <span>3 分钟</span>
+            <i class="fas fa-clock"></i> <span>1 分钟</span>
         </span>
     
     
@@ -194,14 +183,10 @@
         
 
         <div class="article-content markdown-body">
-            <h4 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h4><p>接到运营的需求，需要对CP的包体进行部分修正，默默的掏出APK改之理搞起来，一顿进程后，发现好家伙，失败了？？<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/1.png" alt="演示1"><br>这就尴尬了，赶紧看看什么原因。。。点开目录一看，好家伙，怎么出现了smali_assets目录.<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/2.png" alt="演示2"></p>
-<h4 id="二、查因"><a href="#二、查因" class="headerlink" title="二、查因"></a>二、查因</h4><p>顺着assets关键字对apk进行解压缩，发现apk包里面的assets目录先存着一个dex文件，如图所示<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/3.png" alt="演示3"><br>那么问题就是出现在了这里咯？<br>这个Dex文件是从哪里来的呢？查询得知它来自<a class="link" target="_blank" rel="noopener" href="http://www.msa-alliance.cn/col.jsp?id=120">MSA移动安全联盟sdk<i class="fas fa-external-link-alt"></i></a>，这个SDK是为了解决，Android 10版本中，广告渠道商们作为非厂商系统应用将无法获取 IMEI、MAC等设备信息选择OAID字段作为IMEI等的替代字段标识.没错，它是为了获取设备标识来获取OAID字段的。也就是未来很多apk将会带上这个SDK，那这个问题得解决啊.</p>
-<h4 id="三、解决"><a href="#三、解决" class="headerlink" title="三、解决"></a>三、解决</h4><p>这个问题其实是APK改之理没有长期更新遗留的一个问题，这个问题可以通过两种方法解决。</p>
-<h6 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h6><p>既然APK改之理不支持assets目录有dex文件存在来操作，那么只要把apk里面的assets的dex文件拿出来，反编译，回编译的时候手动放回去就可以解决，这个解决方式一两次还好，多次就显得麻烦的要死了，而且回编译的时候很可能会忘记，导致apk的一些功能异常。</p>
-<h6 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h6><p>解决问题肯定要找到根源来解决啦，APK改之理虽然不更新了，但是他也是依托apktool这个工具来反编译了，说白了就是代码调用了一下这个工具而已，那么更新一下apktool不就可以了，还好apktool到现在没有断更。<br>找到自己现在用的apktool的目录，通过修改apktool来到达彻底解决这个问题的目的。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/7.png" alt="演示7"><br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/8.png" alt="演示8"><br>找到apktool是官网更新日志，查看解决方法，发现在版本2.4.1以上就已经解决了这个问题。<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/4.png" alt="演示4"><br><a class="link" target="_blank" rel="noopener" href="https://ibotpeaches.github.io/Apktool/changes/">APKTool官网更新日志<i class="fas fa-external-link-alt"></i></a><br>既然知道了解决办法，其实就是加一条指令 <code>--only-main-classes</code> 而已。那问题就不大了，找打apktool的源代码，<a class="link" target="_blank" rel="noopener" href="https://github.com/iBotPeaches/Apktool">Apktool在github的源码地址<i class="fas fa-external-link-alt"></i></a>，翻到程序的入口类 <code>brut.apktool.Main</code> 找到对应的入口main方法后。<br>因为我们是为了给APK改之理解决这个问题了，所以就偷个懒，不用看apktool的源代码了，直接遇到反编译指令的时候，强行插入一段我们想要插入的指令，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/5.png" alt="演示5"><br>代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> size = args.length;</span><br><span class="line">String[] newArgs = <span class="keyword">new</span> String[size+<span class="number">1</span>];</span><br><span class="line"><span class="keyword">boolean</span> needAdd = <span class="keyword">false</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">        needAdd = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(needAdd)&#123;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++,j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(args[i].equalsIgnoreCase(<span class="string">&quot;d&quot;</span>) || args[i].equalsIgnoreCase(<span class="string">&quot;decode&quot;</span>))&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">            newArgs[++j] = <span class="string">&quot;--only-main-classes&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            newArgs[j] = args[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>经过简单粗暴的一段代码后，不掉头发的前提下，打出了一个jar包替换APK改之理的jar解决这个问题，如下<br><img src="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/6.png" alt="演示6"></p>
-<p><a href="APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/apktool.jar">编译好的Apktool文件</a></p>
+            <h5 id="自动化原因"><a href="#自动化原因" class="headerlink" title="自动化原因"></a>自动化原因</h5><p>有些渠道希望在平台分发出去的游戏，有自己对应的标识，增加渠道的品牌效果，要去分发的游戏和应用需要带入自己的角标。</p>
+<h5 id="自动化思路"><a href="#自动化思路" class="headerlink" title="自动化思路"></a>自动化思路</h5><p>1.解析AndroidManifest.xml的application的android:icon属性，找到属性值<br>2.属性值分为两种：@mipmap/iconName或者@drawable/iconName<br>3.上面得到的值为mipmap的说明icon在res下名字包含mipmap的相关目录可以找到名字为iconName的png或者jpg图片，drawable的同理<br>经过步骤三：可以筛选出分辨率最高的图片后，对这张图片添加后台针对这个渠道的icon角标进行合成，然后重新命名这张图片（程序此时可以删除刚才搜索出来的所有图片，名字需要精确查找出来的）<br>4.把刚才程序重新命名的图片名字（不包括后缀），写到刚才的 1,2步骤找到的对应值中（android:icon）</p>
+<p>至此出包的时候，就可以自动化的把apk对应的渠道角标，在运营无感知的情况下自动合并，避免因为角标问题给驳回，造成上线时间延长。</p>
+<h5 id="自动化实现"><a href="#自动化实现" class="headerlink" title="自动化实现"></a>自动化实现</h5><p> 按照思路已实现</p>
 
         </div>
 
@@ -213,13 +198,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/06/23/Apk%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A0%87%E6%B8%A0%E9%81%93%E8%A7%92%E6%A0%87%E8%87%AA%E5%8A%A8%E4%B8%AA%E6%80%A7%E5%8C%96%E6%80%9D%E8%B7%AF-%E5%AE%9E%E7%8E%B0/"
+                           href="/2021/06/23/Cocos%E6%B8%B8%E6%88%8FAndroid%E5%B9%B3%E5%8F%B0%E5%90%8E%E5%8F%B0%E5%8F%8C%E6%98%BE%E7%A4%BA/"
                         >
                             <span class="left arrow-icon flex-center" >
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Apk启动图标渠道角标自动个性化思路&amp;实现</span>
+                                <span class="post-nav-title-item">Cocos游戏Android平台后台双显示</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -229,10 +214,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/04/22/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E%E5%AD%A6%E4%B9%A0%E4%B9%8BUnity3d-Android%E9%80%9A%E4%BF%A1/"
+                           href="/2021/04/30/APK%E6%94%B9%E4%B9%8B%E7%90%86%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91MSA%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8%E8%81%94%E7%9B%9Fsdk%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">游戏引擎学习之Unity3d&amp;Android通信</span>
+                                <span class="post-nav-title-item">APK改之理的反编译MSA移动安全联盟sdk异常问题</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center" >
@@ -351,7 +336,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">一、起因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9F%A5%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">二、查因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3"><span class="nav-number">3.</span> <span class="nav-text">三、解决</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">3.0.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">3.0.2.</span> <span class="nav-text">方法二</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">自动化原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">自动化思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">自动化实现</span></a></li></ol>
     </div>
 </div>
         

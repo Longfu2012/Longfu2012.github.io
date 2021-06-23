@@ -165,4 +165,32 @@
         <tag>Unity</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Apk启动图标渠道角标自动个性化思路&amp;实现</title>
+    <url>/2021/06/23/Apk%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A0%87%E6%B8%A0%E9%81%93%E8%A7%92%E6%A0%87%E8%87%AA%E5%8A%A8%E4%B8%AA%E6%80%A7%E5%8C%96%E6%80%9D%E8%B7%AF-%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h5 id="自动化原因"><a href="#自动化原因" class="headerlink" title="自动化原因"></a>自动化原因</h5><p>有些渠道希望在平台分发出去的游戏，有自己对应的标识，增加渠道的品牌效果，要去分发的游戏和应用需要带入自己的角标。</p>
+<h5 id="自动化思路"><a href="#自动化思路" class="headerlink" title="自动化思路"></a>自动化思路</h5><p>1.解析AndroidManifest.xml的application的android:icon属性，找到属性值<br>2.属性值分为两种：@mipmap/iconName或者@drawable/iconName<br>3.上面得到的值为mipmap的说明icon在res下名字包含mipmap的相关目录可以找到名字为iconName的png或者jpg图片，drawable的同理<br>经过步骤三：可以筛选出分辨率最高的图片后，对这张图片添加后台针对这个渠道的icon角标进行合成，然后重新命名这张图片（程序此时可以删除刚才搜索出来的所有图片，名字需要精确查找出来的）<br>4.把刚才程序重新命名的图片名字（不包括后缀），写到刚才的 1,2步骤找到的对应值中（android:icon）</p>
+<p>至此出包的时候，就可以自动化的把apk对应的渠道角标，在运营无感知的情况下自动合并，避免因为角标问题给驳回，造成上线时间延长。</p>
+<h5 id="自动化实现"><a href="#自动化实现" class="headerlink" title="自动化实现"></a>自动化实现</h5><p> 按照思路已实现</p>
+]]></content>
+      <tags>
+        <tag>逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cocos游戏Android平台后台双显示</title>
+    <url>/2021/06/23/Cocos%E6%B8%B8%E6%88%8FAndroid%E5%B9%B3%E5%8F%B0%E5%90%8E%E5%8F%B0%E5%8F%8C%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h5 id="问题出现原因"><a href="#问题出现原因" class="headerlink" title="问题出现原因"></a>问题出现原因</h5><p>起因:Cocos游戏打包后，由于接了一个开屏广告（在游戏画布的插入了一个Activity）后，出现了如下的两个后台的现象。<br><img src="/2021/06/23/Cocos%E6%B8%B8%E6%88%8FAndroid%E5%B9%B3%E5%8F%B0%E5%90%8E%E5%8F%B0%E5%8F%8C%E6%98%BE%E7%A4%BA/%E6%BC%94%E7%A4%BA1.png" alt="演示1"><br>这个问题会导致部分渠道审核人员驳回，认为是bug，其实也不是开发者希望出现的情况，但是开屏广告在展示完后已经finish了，为什么还会存在呢？</p>
+<p>原因:Cocos引擎对其绘制画布的Activity设置了android:taskAffinity属性，并且在这个界面前面还增加了一个启动界面。</p>
+<h5 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h5><p>1.在Androidmanifest里的游戏主activity配置里把android:taskAffinity=””去掉<br>2.在Cocos2dxActivity里的onCreate()回调里注释以下代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!isTaskRoot())</span><br><span class="line">&#123;</span><br><span class="line">  finish();</span><br><span class="line">  Log.w(TAG, <span class="string">&quot;[Workaround] Ignore the activity started from icon!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.在Cocos2dxActivity里的onDestroy()回调里注释以下代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!isTaskRoot()) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.在AppActivity里的onCreate(),onDestroy()回调里注释以下代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!isTaskRoot()) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Cocos</tag>
+      </tags>
+  </entry>
 </search>

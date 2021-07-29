@@ -193,4 +193,74 @@
         <tag>Cocos</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Window10下编译OLLVM的姿势</title>
+    <url>/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>OLLVM(Obfuscator-LLVM)是瑞士西北应用科技大学安全实验室，移植了LLVM并且改进的一个项目<a class="link" href="https://github.com/obfuscator-llvm/obfuscator">obfuscator-LLVM<i class="fas fa-external-link-alt"></i></a>，但是很久没有更新了，所以后续我选择的是github里面稍微比他新一点的分支<a class="link" href="https://github.com/amimo/goron">goron<i class="fas fa-external-link-alt"></i></a>进行使用。</p>
+<h4 id="Window环境搭建（2021年07月27号）"><a href="#Window环境搭建（2021年07月27号）" class="headerlink" title="Window环境搭建（2021年07月27号）"></a>Window环境搭建（2021年07月27号）</h4><p>Window下编译OLLVM最让人抓狂的就是环境问题，还有就是一些环境产生的语法问题，标题之所以标上日期，是为了给大家参考的同时，看一下编译成功的时候，考虑当时各个环境的版本和其他问题。</p>
+<h5 id="cmake-安装配置"><a href="#cmake-安装配置" class="headerlink" title="cmake 安装配置"></a>cmake 安装配置</h5><ul>
+<li>安装<br>cmake官网下载地址<a class="link" href="https://cmake.org/download/">下载地址<i class="fas fa-external-link-alt"></i></a>,在这里选择下载一个自己对应平台的二进制包安装就可以了，我这里下载的是  <strong>cmake-3.21.0-windows-x86_64.msi</strong> 这个包。</li>
+<li>配置<br>为了在window上任何地方方便使用，我们配置上环境变量<br>1、 新建环境变量：CMAKE_HOME=”你的安装目录到bin目录”.<br>2、添加%CMAKE_HOME%到Path中即可.</li>
+<li>校验<br>为了校验上一步的配置是否正确，可以在命令行中输了<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cmake --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/1.png" alt="演示1"></li>
+</ul>
+<h5 id="TDM-GCC-安装配置"><a href="#TDM-GCC-安装配置" class="headerlink" title="TDM-GCC 安装配置"></a>TDM-GCC 安装配置</h5><ul>
+<li>安装<br>为什么安装 <strong>TDM-GCC</strong> 而不推荐大家安装全网都在推荐的 <strong>MinGW</strong> ，这个是写这篇记录的重点，因为在window上我给Mingw整整坑了好几天，每一次都是在 <strong>make</strong> 的步骤中出现各种问题,其次 <strong>TDM-GCC</strong>也能使用<strong>MinGW</strong>，具体选择还是看一下自己的具体情况。<br>这里也给出Mingw的下载直达地址<a class="link" href="http://www.mingw-w64.org/doku.php/download">Mingw<i class="fas fa-external-link-alt"></i></a><br>我们后面使用编译的是TDM-GCC，在<a class="link" href="https://jmeubank.github.io/tdm-gcc/download/">这里下载<i class="fas fa-external-link-alt"></i></a></li>
+<li>配置<br>1、 新建环境变量：TDM_GCC_HOME=”你的安装目录到bin目录”.<br>2、添加%TDM_GCC_HOME%到Path中即可.</li>
+<li>校验<br>为了校验上一步的配置是否正确，因为我们是要使用<strong>MinGW</strong>，所以可以在命令行中输了<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mingw32-make --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/2.png" alt="演示2"><h5 id="Python-安装配置"><a href="#Python-安装配置" class="headerlink" title="Python 安装配置"></a>Python 安装配置</h5></li>
+<li>安装<br>Python的安装是因为编译代码中有部分是用python写的，并且是用python2.x（Python2.x和Python3.x的差别有点大），所以我们在<a class="link" href="https://www.python.org/download/releases/2.7/">官网下载<i class="fas fa-external-link-alt"></i></a>一个python2.x相关的版本并且安装。</li>
+<li>配置<br>1、 新建环境变量：PYTHON_27_HOME=”你的安装目录”.<br>2、添加%PYTHON_27_HOME%到Path中即可.</li>
+<li>校验<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/3.png" alt="演示3"></li>
+</ul>
+<h5 id="OLLVM-goron-分支下载"><a href="#OLLVM-goron-分支下载" class="headerlink" title="OLLVM (goron) 分支下载"></a>OLLVM (goron) 分支下载</h5><p>这里我选择的是9.0版本，<a class="link" href="https://github.com/amimo/goron/tree/llvm-9.0.0">Github仓库地址<i class="fas fa-external-link-alt"></i></a></p>
+<hr>
+<h4 id="OLLVM编译"><a href="#OLLVM编译" class="headerlink" title="OLLVM编译"></a>OLLVM编译</h4><ul>
+<li><p>新建一个文件夹，并且进入这个构建文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir goron_build #创建一个文件夹</span><br></pre></td></tr></table></figure>
+<p>然后进入到这个文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd goron_build</span><br></pre></td></tr></table></figure></li>
+<li><p>cmake 处理构建环境<br>这个步骤处理非常快，大概一分钟就完成，运行指令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cmake -G &quot;MinGW Makefiles&quot; -DCMAKE_BUILD_TYPE&#x3D;Release -DLLVM_ENABLE_PROJECTS&#x3D;clang -DLLVM_INCLUDE_TESTS&#x3D;OFF ..\goron\llvm</span><br></pre></td></tr></table></figure>
+<p>其中goron是clone下来的根目录，指令跑完<strong>goron_build</strong>文件夹会产生很多后续要构建的文件和反馈提示。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/4.png" alt="演示4"></p>
+</li>
+<li><p>make  编译<br>这个是耗时最长，并且失败点最多的地方，需要注意的是编译环境中的编译工具的版本号与被编译的源码直接是否匹配，因为有些语法可能会出问题，比如python的语法。<br>运行指令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mingw32-make -j12</span><br></pre></td></tr></table></figure>
+<p>这里的j12是使用了12线程编译，看自己机器的能力自己调整一下，我使用的是i7处理器，编译花了差不多30多分钟才完成。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/5.png" alt="演示5"><br>编译过程比较漫长，并且在window下出错的概率确实比mac下要大很多(还去折腾了一下Ubuntu下的编译，因为window下已经成功了，就暂时没有去研究)，祝大家好运吧。</p>
+</li>
+</ul>
+<h4 id="NDK环境及其使用"><a href="#NDK环境及其使用" class="headerlink" title="NDK环境及其使用"></a>NDK环境及其使用</h4><p>在编译完OLLVM后，就需要开始配置编译好的文件了，主要是要替换一些文件，方便识别指定的命令做出指定的动作，来完成OLLVM的使命。</p>
+<h5 id="NDK版本"><a href="#NDK版本" class="headerlink" title="NDK版本"></a>NDK版本</h5><p>NDK的版本和需要编译的OLLVM也有一些关联，这点需要注意一些<br>目前我使用的NDK版本号为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ndkVersion &#39;22.1.7171670&#39;</span><br></pre></td></tr></table></figure>
+<h5 id="llvm相关文件替换"><a href="#llvm相关文件替换" class="headerlink" title="llvm相关文件替换"></a>llvm相关文件替换</h5><p>找到所使用NDK版本所在的文件位置，比如我的放在</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">D:\ProgramFiles\Android\Sdk\ndk\22.1.7171670\toolchains\llvm\prebuilt\windows-x86_64</span><br></pre></td></tr></table></figure>
+<p>复制刚才编译出来的bin和lib覆盖这个目录的文件，在此之前建议备份一下llvm目录，因为可能在配置步骤中会出现问题，可以及时的还原。</p>
+<h5 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h5><p>在AndroidStudio中找到你需要使用OLLVM的模块，找到对应的 <strong>build.gradle</strong> 对应位置设置你需要的混淆参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">···</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">···</span><br><span class="line">        externalNativeBuild &#123;</span><br><span class="line">            cmake &#123;</span><br><span class="line">                cppFlags &quot;-std&#x3D;c++11&quot;</span><br><span class="line">                cppFlags &quot;-mllvm -irobf-indbr -mllvm -irobf-icall -mllvm -irobf-indgv -mllvm -irobf-cse&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">···</span><br><span class="line">&#125;</span><br><span class="line">···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="混淆效果"><a href="#混淆效果" class="headerlink" title="混淆效果"></a>混淆效果</h5><p>逆向中很重要的一个突破点就是字符串的查找线索和猜想，这里混淆效果还算比较好，这里原来是字符串，现在基本上找不到明文影子。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/6.png" alt="演示6"></p>
+<hr>
+<h4 id="编译成品下载"><a href="#编译成品下载" class="headerlink" title="编译成品下载"></a>编译成品下载</h4><ul>
+<li><p>Mac下编译goron成功的文件<br><a href="MyRes/mac_build_6.0.zip" target="_blank">mac_build_6.0.zip</a><br><a href="MyRes/mac_build_7.0.zip" target="_blank">mac_build_7.0.zip</a><br><a href="MyRes/mac_build_8.0.zip" target="_blank">mac_build_8.0.zip</a><br><a href="MyRes/mac_build_9.0.zip" target="_blank">mac_build_9.0.zip</a></p>
+</li>
+<li><p>Window10下编译goron成功的文件<br><a href="MyRes/win10_build_9.0.zip" target="_blank">win10_build_9.0.zip</a><br>Window的太大了，所以只上传bin,lib和include目录。</p>
+</li>
+<li><p>参考修改的编译集成环境<br><a href="MyRes/ollvm_build_tool.zip" target="_blank">ollvm_build_tool.zip</a></p>
+</li>
+</ul>
+<p>编译好的文件和集成环境提供给大家，不想折腾的同学，看一下能不能帮助到你。</p>
+<hr>
+<h4 id="遇到的一些问题"><a href="#遇到的一些问题" class="headerlink" title="遇到的一些问题"></a>遇到的一些问题</h4><p>在起初编译的环境中选择在window下，因为很多工作都还在window下感觉比较方便，后来没有成功后，转向了Mac环境下的编译，也出了各种问题，因为公司的Mac是M1，感觉不知道是不是很M1有关系，因为我在家里的Mac编译是没有问题的，附上Mac Pro编译的<a href="MyRes/mac_build_9.0.zip" target="_blank">mac_build_9.0.zip</a></p>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ul>
+<li><a class="link" href="https://www.zhihu.com/question/39952667">MinGW、MinGW-w64 与TDM-GCC 应该如何选择<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" href="https://www.jianshu.com/p/cfe6c4b11d75">Windows多种方案编译LLVM(ollvm)<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" href="https://www.jianshu.com/p/ab3694b12cfc">mac ollvm环境编译<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" href="https://www.jianshu.com/p/e0637f3169a3">OLLVM代码混淆移植与使用<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>逆向</tag>
+        <tag>OLLVM</tag>
+      </tags>
+  </entry>
 </search>

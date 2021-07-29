@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        Window10下编译OLLVM的姿势 |
+        
+        Angulu&#39;s Technology Stack
+    </title>
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.svg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Replay is the fastest way to improve."}},"local_search":{"enable":true,"trigger":"auto","unescape":true,"preload":true},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章除特别声明外，均采用 %s 许可协议。转载请注明出处！"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            Angulu&#39;s Technology Stack
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/categories"
+                    >
+                        分类
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Window10下编译OLLVM的姿势</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>Angulu</span>
+                        <span class="level">Lv1</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2021-07-27 18:02:03
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/OLLVM/">OLLVM</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i> <span>1.5k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i> <span>5 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i> <span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>OLLVM(Obfuscator-LLVM)是瑞士西北应用科技大学安全实验室，移植了LLVM并且改进的一个项目<a class="link" target="_blank" rel="noopener" href="https://github.com/obfuscator-llvm/obfuscator">obfuscator-LLVM<i class="fas fa-external-link-alt"></i></a>，但是很久没有更新了，所以后续我选择的是github里面稍微比他新一点的分支<a class="link" target="_blank" rel="noopener" href="https://github.com/amimo/goron">goron<i class="fas fa-external-link-alt"></i></a>进行使用。</p>
+<h4 id="Window环境搭建（2021年07月27号）"><a href="#Window环境搭建（2021年07月27号）" class="headerlink" title="Window环境搭建（2021年07月27号）"></a>Window环境搭建（2021年07月27号）</h4><p>Window下编译OLLVM最让人抓狂的就是环境问题，还有就是一些环境产生的语法问题，标题之所以标上日期，是为了给大家参考的同时，看一下编译成功的时候，考虑当时各个环境的版本和其他问题。</p>
+<h5 id="cmake-安装配置"><a href="#cmake-安装配置" class="headerlink" title="cmake 安装配置"></a>cmake 安装配置</h5><ul>
+<li>安装<br>cmake官网下载地址<a class="link" target="_blank" rel="noopener" href="https://cmake.org/download/">下载地址<i class="fas fa-external-link-alt"></i></a>,在这里选择下载一个自己对应平台的二进制包安装就可以了，我这里下载的是  <strong>cmake-3.21.0-windows-x86_64.msi</strong> 这个包。</li>
+<li>配置<br>为了在window上任何地方方便使用，我们配置上环境变量<br>1、 新建环境变量：CMAKE_HOME=”你的安装目录到bin目录”.<br>2、添加%CMAKE_HOME%到Path中即可.</li>
+<li>校验<br>为了校验上一步的配置是否正确，可以在命令行中输了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/1.png" alt="演示1"></li>
+</ul>
+<h5 id="TDM-GCC-安装配置"><a href="#TDM-GCC-安装配置" class="headerlink" title="TDM-GCC 安装配置"></a>TDM-GCC 安装配置</h5><ul>
+<li>安装<br>为什么安装 <strong>TDM-GCC</strong> 而不推荐大家安装全网都在推荐的 <strong>MinGW</strong> ，这个是写这篇记录的重点，因为在window上我给Mingw整整坑了好几天，每一次都是在 <strong>make</strong> 的步骤中出现各种问题,其次 <strong>TDM-GCC</strong>也能使用<strong>MinGW</strong>，具体选择还是看一下自己的具体情况。<br>这里也给出Mingw的下载直达地址<a class="link" target="_blank" rel="noopener" href="http://www.mingw-w64.org/doku.php/download">Mingw<i class="fas fa-external-link-alt"></i></a><br>我们后面使用编译的是TDM-GCC，在<a class="link" target="_blank" rel="noopener" href="https://jmeubank.github.io/tdm-gcc/download/">这里下载<i class="fas fa-external-link-alt"></i></a></li>
+<li>配置<br>1、 新建环境变量：TDM_GCC_HOME=”你的安装目录到bin目录”.<br>2、添加%TDM_GCC_HOME%到Path中即可.</li>
+<li>校验<br>为了校验上一步的配置是否正确，因为我们是要使用<strong>MinGW</strong>，所以可以在命令行中输了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mingw32-make --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/2.png" alt="演示2"><h5 id="Python-安装配置"><a href="#Python-安装配置" class="headerlink" title="Python 安装配置"></a>Python 安装配置</h5></li>
+<li>安装<br>Python的安装是因为编译代码中有部分是用python写的，并且是用python2.x（Python2.x和Python3.x的差别有点大），所以我们在<a class="link" target="_blank" rel="noopener" href="https://www.python.org/download/releases/2.7/">官网下载<i class="fas fa-external-link-alt"></i></a>一个python2.x相关的版本并且安装。</li>
+<li>配置<br>1、 新建环境变量：PYTHON_27_HOME=”你的安装目录”.<br>2、添加%PYTHON_27_HOME%到Path中即可.</li>
+<li>校验<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+可以得到如下的返回，说明配置没有问题。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/3.png" alt="演示3"></li>
+</ul>
+<h5 id="OLLVM-goron-分支下载"><a href="#OLLVM-goron-分支下载" class="headerlink" title="OLLVM (goron) 分支下载"></a>OLLVM (goron) 分支下载</h5><p>这里我选择的是9.0版本，<a class="link" target="_blank" rel="noopener" href="https://github.com/amimo/goron/tree/llvm-9.0.0">Github仓库地址<i class="fas fa-external-link-alt"></i></a></p>
+<hr>
+<h4 id="OLLVM编译"><a href="#OLLVM编译" class="headerlink" title="OLLVM编译"></a>OLLVM编译</h4><ul>
+<li><p>新建一个文件夹，并且进入这个构建文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir goron_build #创建一个文件夹</span><br></pre></td></tr></table></figure>
+<p>然后进入到这个文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd goron_build</span><br></pre></td></tr></table></figure></li>
+<li><p>cmake 处理构建环境<br>这个步骤处理非常快，大概一分钟就完成，运行指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -G &quot;MinGW Makefiles&quot; -DCMAKE_BUILD_TYPE&#x3D;Release -DLLVM_ENABLE_PROJECTS&#x3D;clang -DLLVM_INCLUDE_TESTS&#x3D;OFF ..\goron\llvm</span><br></pre></td></tr></table></figure>
+<p>其中goron是clone下来的根目录，指令跑完<strong>goron_build</strong>文件夹会产生很多后续要构建的文件和反馈提示。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/4.png" alt="演示4"></p>
+</li>
+<li><p>make  编译<br>这个是耗时最长，并且失败点最多的地方，需要注意的是编译环境中的编译工具的版本号与被编译的源码直接是否匹配，因为有些语法可能会出问题，比如python的语法。<br>运行指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mingw32-make -j12</span><br></pre></td></tr></table></figure>
+<p>这里的j12是使用了12线程编译，看自己机器的能力自己调整一下，我使用的是i7处理器，编译花了差不多30多分钟才完成。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/5.png" alt="演示5"><br>编译过程比较漫长，并且在window下出错的概率确实比mac下要大很多(还去折腾了一下Ubuntu下的编译，因为window下已经成功了，就暂时没有去研究)，祝大家好运吧。</p>
+</li>
+</ul>
+<h4 id="NDK环境及其使用"><a href="#NDK环境及其使用" class="headerlink" title="NDK环境及其使用"></a>NDK环境及其使用</h4><p>在编译完OLLVM后，就需要开始配置编译好的文件了，主要是要替换一些文件，方便识别指定的命令做出指定的动作，来完成OLLVM的使命。</p>
+<h5 id="NDK版本"><a href="#NDK版本" class="headerlink" title="NDK版本"></a>NDK版本</h5><p>NDK的版本和需要编译的OLLVM也有一些关联，这点需要注意一些<br>目前我使用的NDK版本号为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ndkVersion &#39;22.1.7171670&#39;</span><br></pre></td></tr></table></figure>
+<h5 id="llvm相关文件替换"><a href="#llvm相关文件替换" class="headerlink" title="llvm相关文件替换"></a>llvm相关文件替换</h5><p>找到所使用NDK版本所在的文件位置，比如我的放在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\ProgramFiles\Android\Sdk\ndk\22.1.7171670\toolchains\llvm\prebuilt\windows-x86_64</span><br></pre></td></tr></table></figure>
+<p>复制刚才编译出来的bin和lib覆盖这个目录的文件，在此之前建议备份一下llvm目录，因为可能在配置步骤中会出现问题，可以及时的还原。</p>
+<h5 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h5><p>在AndroidStudio中找到你需要使用OLLVM的模块，找到对应的 <strong>build.gradle</strong> 对应位置设置你需要的混淆参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">···</span><br><span class="line">defaultConfig &#123;</span><br><span class="line">···</span><br><span class="line">        externalNativeBuild &#123;</span><br><span class="line">            cmake &#123;</span><br><span class="line">                cppFlags &quot;-std&#x3D;c++11&quot;</span><br><span class="line">                cppFlags &quot;-mllvm -irobf-indbr -mllvm -irobf-icall -mllvm -irobf-indgv -mllvm -irobf-cse&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">···</span><br><span class="line">&#125;</span><br><span class="line">···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="混淆效果"><a href="#混淆效果" class="headerlink" title="混淆效果"></a>混淆效果</h5><p>逆向中很重要的一个突破点就是字符串的查找线索和猜想，这里混淆效果还算比较好，这里原来是字符串，现在基本上找不到明文影子。<br><img src="/2021/07/27/Window10%E4%B8%8B%E7%BC%96%E8%AF%91OLLVM%E7%9A%84%E5%A7%BF%E5%8A%BF/6.png" alt="演示6"></p>
+<hr>
+<h4 id="编译成品下载"><a href="#编译成品下载" class="headerlink" title="编译成品下载"></a>编译成品下载</h4><ul>
+<li><p>Mac下编译goron成功的文件<br><a href="MyRes/mac_build_6.0.zip" target="_blank">mac_build_6.0.zip</a><br><a href="MyRes/mac_build_7.0.zip" target="_blank">mac_build_7.0.zip</a><br><a href="MyRes/mac_build_8.0.zip" target="_blank">mac_build_8.0.zip</a><br><a href="MyRes/mac_build_9.0.zip" target="_blank">mac_build_9.0.zip</a></p>
+</li>
+<li><p>Window10下编译goron成功的文件<br><a href="MyRes/win10_build_9.0.zip" target="_blank">win10_build_9.0.zip</a><br>Window的太大了，所以只上传bin,lib和include目录。</p>
+</li>
+<li><p>参考修改的编译集成环境<br><a href="MyRes/ollvm_build_tool.zip" target="_blank">ollvm_build_tool.zip</a></p>
+</li>
+</ul>
+<p>编译好的文件和集成环境提供给大家，不想折腾的同学，看一下能不能帮助到你。</p>
+<hr>
+<h4 id="遇到的一些问题"><a href="#遇到的一些问题" class="headerlink" title="遇到的一些问题"></a>遇到的一些问题</h4><p>在起初编译的环境中选择在window下，因为很多工作都还在window下感觉比较方便，后来没有成功后，转向了Mac环境下的编译，也出了各种问题，因为公司的Mac是M1，感觉不知道是不是很M1有关系，因为我在家里的Mac编译是没有问题的，附上Mac Pro编译的<a href="MyRes/mac_build_9.0.zip" target="_blank">mac_build_9.0.zip</a></p>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ul>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.zhihu.com/question/39952667">MinGW、MinGW-w64 与TDM-GCC 应该如何选择<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.jianshu.com/p/cfe6c4b11d75">Windows多种方案编译LLVM(ollvm)<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.jianshu.com/p/ab3694b12cfc">mac ollvm环境编译<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.jianshu.com/p/e0637f3169a3">OLLVM代码混淆移植与使用<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/06/23/Cocos%E6%B8%B8%E6%88%8FAndroid%E5%B9%B3%E5%8F%B0%E5%90%8E%E5%8F%B0%E5%8F%8C%E6%98%BE%E7%A4%BA/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Cocos游戏Android平台后台双显示</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2021 <i class="fas fa-heart icon-animate"></i> <a href="/">Angulu</a>
+        </div>
+        
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a class="theme-version" target="_blank"></a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Window%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%EF%BC%882021%E5%B9%B407%E6%9C%8827%E5%8F%B7%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Window环境搭建（2021年07月27号）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cmake-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">cmake 安装配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TDM-GCC-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">TDM-GCC 安装配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Python-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">Python 安装配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#OLLVM-goron-%E5%88%86%E6%94%AF%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.4.</span> <span class="nav-text">OLLVM (goron) 分支下载</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OLLVM%E7%BC%96%E8%AF%91"><span class="nav-number">3.</span> <span class="nav-text">OLLVM编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NDK%E7%8E%AF%E5%A2%83%E5%8F%8A%E5%85%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">NDK环境及其使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NDK%E7%89%88%E6%9C%AC"><span class="nav-number">4.1.</span> <span class="nav-text">NDK版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#llvm%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%E6%9B%BF%E6%8D%A2"><span class="nav-number">4.2.</span> <span class="nav-text">llvm相关文件替换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">配置参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B7%B7%E6%B7%86%E6%95%88%E6%9E%9C"><span class="nav-number">4.4.</span> <span class="nav-text">混淆效果</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%88%90%E5%93%81%E4%B8%8B%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">编译成品下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">遇到的一些问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/toc.js"></script>
+    
+
+
+</body>
+</html>
